@@ -25,7 +25,7 @@ self.addEventListener('activate', function (event) {
 });
 
 // Intercept fetch requests and cache them
-self.addEventListener('fetch', function (event) {
+self.addEventListener('fetch', async function(event) {
   // We added some known URLs to the cache above, but tracking down every
   // subsequent network request URL and adding it manually would be very taxing.
   // We will be adding all of the resources not specified in the intiial cache
@@ -48,10 +48,9 @@ self.addEventListener('fetch', function (event) {
         // Note: we need to make a copy of the response to save it in
         // the cache and use the original as the request response.
         cache.put(event.request, fetchedResponse.clone());
-
         // Return the network response
         return fetchedResponse;
-      })
+      });
     });
   }));
 });
